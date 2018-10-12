@@ -1,0 +1,56 @@
+# Benchmark Results of Http Client Tuning
+
+## JDK Client
+----
+$ wrk -d 60 -t 200 -c 300 http://localhost:8081/default
+Running 1m test @ http://localhost:8081/default
+  200 threads and 300 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   428.28ms  197.76ms   1.99s    90.31%
+    Req/Sec     2.23      0.79     5.00     83.94%
+  28137 requests in 1.00m, 12.67MB read
+  Socket errors: connect 0, read 0, write 0, timeout 41
+Requests/sec:    468.06
+Transfer/sec:    215.81KB
+----
+## Apache Client
+----
+$ wrk -d 60 -t 200 -c 300 http://localhost:8081/apache
+Running 1m test @ http://localhost:8081/apache
+  200 threads and 300 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   419.24ms  193.38ms   2.00s    88.88%
+    Req/Sec     2.32      0.79     5.00     85.59%
+  28635 requests in 1.00m, 12.89MB read
+  Socket errors: connect 0, read 0, write 0, timeout 41
+Requests/sec:    476.37
+Transfer/sec:    219.64KB
+----
+## Apache Client via Spring Cloud Commons
+----
+$ wrk -d 60 -t 200 -c 300 http://localhost:8081/apachespring
+Running 1m test @ http://localhost:8081/apachespring
+  200 threads and 300 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   423.83ms  215.93ms   2.00s    89.00%
+    Req/Sec     2.35      0.83     5.00     83.71%
+  28460 requests in 1.00m, 12.81MB read
+  Socket errors: connect 0, read 0, write 0, timeout 56
+  Non-2xx or 3xx responses: 1
+Requests/sec:    473.47
+Transfer/sec:    218.30KB
+----
+## OkHttpClient via Spring Cloud Commons
+----
+$ wrk -d 60 -t 200 -c 300 http://localhost:8081/ok
+Running 1m test @ http://localhost:8081/ok
+  200 threads and 300 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   377.16ms  175.46ms   1.99s    91.24%
+    Req/Sec     2.64      0.73     5.00     88.59%
+  32005 requests in 1.00m, 14.41MB read
+  Socket errors: connect 0, read 0, write 0, timeout 50
+  Non-2xx or 3xx responses: 3
+Requests/sec:    531.75
+Transfer/sec:    245.16KB
+----
