@@ -2,9 +2,9 @@
 
 Code base for the blog post link:http://www.bytesville.com/changing-httpclient-in-spring-resttemplate/[]
 
-# Benchmark Results of Http Client Tuning
+## Benchmark Results of Http Client Tuning
 
-## JDK Client
+### JDK Client
 ----
 $ wrk -d 60 -t 200 -c 300 http://localhost:8081/default
 Running 1m test @ http://localhost:8081/default
@@ -17,7 +17,7 @@ Running 1m test @ http://localhost:8081/default
 Requests/sec:    468.06
 Transfer/sec:    215.81KB
 ----
-## Apache Client
+### Apache Client
 ----
 $ wrk -d 60 -t 200 -c 300 http://localhost:8081/apache
 Running 1m test @ http://localhost:8081/apache
@@ -30,7 +30,7 @@ Running 1m test @ http://localhost:8081/apache
 Requests/sec:    476.37
 Transfer/sec:    219.64KB
 ----
-## Apache Client via Spring Cloud Commons
+### Apache Client via Spring Cloud Commons
 ----
 $ wrk -d 60 -t 200 -c 300 http://localhost:8081/apachespring
 Running 1m test @ http://localhost:8081/apachespring
@@ -44,7 +44,7 @@ Running 1m test @ http://localhost:8081/apachespring
 Requests/sec:    473.47
 Transfer/sec:    218.30KB
 ----
-## OkHttpClient via Spring Cloud Commons
+### OkHttpClient via Spring Cloud Commons
 ----
 $ wrk -d 60 -t 200 -c 300 http://localhost:8081/ok
 Running 1m test @ http://localhost:8081/ok
