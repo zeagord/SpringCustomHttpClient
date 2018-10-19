@@ -1,5 +1,6 @@
 package com.bytesville.customhttpclient;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import okhttp3.OkHttpClient;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -18,18 +19,22 @@ import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 public class RequestFactoryConfig {
 
   private final ConnectionKeepAliveStrategy connectionKeepAliveStrategy;
-
-  RequestFactoryConfig(ConnectionKeepAliveStrategy connectionKeepAliveStrategy){
+  private final MeterRegistry registry;
+  RequestFactoryConfig(ConnectionKeepAliveStrategy connectionKeepAliveStrategy, MeterRegistry registry){
     this.connectionKeepAliveStrategy = connectionKeepAliveStrategy;
+    this.registry = registry;
   }
 
   @Bean
   @Qualifier("apacheRestTemplate")
-  public ClientHttpRequestFactory createRequestFactory(){
+  public ClientHttpRequestFactory createRequestFactory() throws InterruptedException {
     PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
     connectionManager.setMaxTotal(400);
     connectionManager.setDefaultMaxPerRoute(200);
-
+    IdleConnectionMonitorThread
+        connectionMonitor = new IdleConnectionMonitorThread(connectionManager, registry);
+    connectionMonitor.start();
+    connectionMonitor.join(2000);
     RequestConfig requestConfig = RequestConfig
         .custom()
         .setConnectionRequestTimeout(5000)

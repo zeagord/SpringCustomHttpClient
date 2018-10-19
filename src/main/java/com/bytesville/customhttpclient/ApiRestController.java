@@ -28,16 +28,16 @@ public class ApiRestController {
 
   @GetMapping("/apache")
   public String getApache() {
-    return restTemplate.getForObject("http://httpbin.org/anything", String.class);
+    return apacheRestTemplate.getForObject("http://httpbin.org/anything", String.class);
   }
 
   @GetMapping("/apachespring")
   public String getApacheSpring() {
-    return restTemplate.getForObject("http://httpbin.org/anything", String.class);
+    return apacheSpringCommonsRestTemplate.getForObject("http://httpbin.org/anything", String.class);
   }
   @GetMapping("/ok")
   public String getOk() {
-    return restTemplate.getForObject("http://httpbin.org/anything", String.class);
+    return okRestTemplate.getForObject("http://httpbin.org/anything", String.class);
   }
 
 }
